@@ -1,14 +1,17 @@
 {
   "id": "atl-map",
-  "displayName": "atl-map",
-  "version": "1.0.0",
+  "displayName": "atl-map微信小程序高德、腾讯地图",
+  "version": "1.0.4",
   "description": "简易好用的微信小程序地图定位，封装腾讯、高德地图sdk，atl-map开箱即用",
   "keywords": [
-    "atl-map","定位","微信小程序地图","高德地图","腾讯地图"
+    "atl-map",
+    "定位",
+    "微信小程序地图",
+    "高德/腾讯地图"
 ],
-  "repository": "",
+  "repository": "https://github.com/13982720426/uniapp-plugin-atl-map.git",
   "engines": {
-    "HBuilderX": "^3.1.0"
+    "HBuilderX": "^3.91"
   },
   "dcloudext": {
     "type": "component-vue",
@@ -24,9 +27,9 @@
       "qq": ""
     },
     "declaration": {
-      "ads": "",
-      "data": "",
-      "permissions": ""
+      "ads": "无",
+      "data": "无",
+      "permissions": "mp-weixin：\n\"requiredPrivateInfos\": [\"getLocation\"],\n        \"permission\" : {\n            \"scope.userLocation\" : {\n                \"desc\" : \"开启定位\"\n            }\n        }"
     },
     "npmurl": ""
   },
@@ -35,13 +38,13 @@
     "encrypt": [],
     "platforms": {
       "cloud": {
-        "tcb": "u",
-        "aliyun": "u"
+        "tcb": "y",
+        "aliyun": "y"
       },
       "client": {
         "Vue": {
-          "vue2": "u",
-          "vue3": "u"
+          "vue2": "y",
+          "vue3": "y"
         },
         "App": {
           "app-vue": "u",
@@ -62,7 +65,7 @@
           "Safari": "u"
         },
         "小程序": {
-          "微信": "u",
+          "微信": "y",
           "阿里": "u",
           "百度": "u",
           "字节跳动": "u",
