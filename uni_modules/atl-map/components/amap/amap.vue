@@ -35,7 +35,6 @@
 
 <script>
 import amap from './amap-wx.js';
-import { debounce } from '@/utils/utils.js';
 
 export default {
 	name: 'amap',
