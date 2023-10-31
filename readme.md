@@ -1,15 +1,15 @@
 # atl-map微信小程序高德、腾讯地图
 
-简易好用的微信小程序地图定位，封装腾讯、高德地图sdk，atl-map开箱即用
+简易好用的微信小程序地图定位，封装腾讯、高德、百度地图sdk，atl-map开箱即用
 
 [atl-map插件下载](https://ext.dcloud.net.cn/plugin?name=atl-map)
 
 ## 使用前准备
 在平台创建应用并申请key
 ### 申请高德、腾讯、百度地图key
-- 高德地图测试key 申请地址 https://console.amap.com/dev/key/app 服务平台选择微信小程序
-- 腾讯地图测试key 申请地址 https://lbs.qq.com/dev/console/application/mine  启用产品选择微信小程序
-- 百度地图测试key 申请地址 https://lbs.baidu.com/apiconsole/key/create#/home  应用类型选择微信小程序
+- 高德地图测试key 申请地址 `https://console.amap.com/dev/key/app` 服务平台选择微信小程序
+- 腾讯地图测试key 申请地址 `https://lbs.qq.com/dev/console/application/mine`  启用产品选择微信小程序
+- 百度地图测试key 申请地址 `https://lbs.baidu.com/apiconsole/key/create#/home`  应用类型选择微信小程序
 
 配置文件 `manifest.json` 微信小程序需要开启定位权限配置`requiredPrivateInfos`和`permission`
 ```json
@@ -59,7 +59,7 @@ export default {
 			// mapKey: '42795f9a59358dxxxxxxxxx',//高德地图测试key 
 			// mapType: 'amap'
 			mapType: 'tmap',
-			mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ' //腾讯地图测试key 
+			mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ' //腾讯地图测试key (每日限量，请自行申请)
 			// mapKey: 'p5mGzPEt30bwv1yEkeQGxxxx', //百度地图key
 			// mapType: 'bmap' //百度地图
 		};
@@ -84,23 +84,55 @@ export default {
 
 ## API
 
-|  参数			| 说明																										| 类型							| 默认值																																																	|
-|  -----		| ----------------																			| ----						| ----------------																																											|
-| mapKey		| `必填`，地图KEY																				| `String`				| 腾讯测试key(每日限量)																																									|
-| mapType		| `非必填`，地图类型(腾讯:'tmap',高德:'amap',百度:'bmap')	| `String`				| tmap																																																	|
-| longitude	| `非必填`，经度																					| `String、Number`	| 当前定位																																																|
-| latitude	| `非必填`，纬度																					| `String、Number`	| 当前定位																																																|
-| marker		| `非必填`，点位配置，只支持一个点位											| `Object`				| [uniapp map组件](https://uniapp.dcloud.net.cn/component/map.html#marker)默认值													|
-| disable		| `非必填`，确定按钮是否禁用															| `Boolean`				| false																																																	|
-| confirm		| `非必填`，点击确定事件																	| `Function`			| 返回值`{title:'标题',latitude:'纬度',longitude:'经度',address:'详细地址',...高德/腾讯/百度地图其他参数}`	|
+|  参数			| 说明																										| 类型							| 默认值																																					|
+|  -----		| ----------------																			| ----						| ----------------																															|
+| mapKey		| `必填`，地图KEY																				| `String`				| 腾讯测试key(每日限量)																													|
+| mapType		| `非必填`，地图类型(腾讯:'tmap',高德:'amap',百度:'bmap')	| `String`				| tmap																																					|
+| longitude	| `非必填`，经度																					| `String、Number`	| 当前定位																																				|
+| latitude	| `非必填`，纬度																					| `String、Number`	| 当前定位																																				|
+| marker		| `非必填`，点位配置，只支持一个点位											| `Object`				| [uniapp map组件](https://uniapp.dcloud.net.cn/component/map.html#marker)默认值	|
+| disable		| `非必填`，确定按钮是否禁用															| `Boolean`				| false																																					|
+| confirm		| `非必填`，点击确定事件																	| `Function`			| 返回值`{title,latitude,longitude,address,...高德/腾讯/百度地图其他参数}`				|
+
 
 ## 注意事项
 
 1. [腾讯地图key](https://lbs.qq.com/dev/console/application/mine) 每日限量测试，请自行申请
 2. 目前只支持微信小程序，其他平台请下载源码自行测试修改[github地址](https://github.com/13982720426/uniapp-plugin-atl-map.git)
-3. 本项目使用vue2语法，vue3也是支持的
+3. 本项目使用vue2语法，vue3的OptionsAPI也是支持的
 4. 微信小程序可能需要设置服务器域名，[登录小程序平台](https://mp.weixin.qq.com/wxamp/index/index) 服务器域名 -> request合法域名(填入用到的平台域名 `https://api.map.baidu.com;https://apis.map.qq.com;https://restapi.amap.com;`
 5. 百度地图如果遇到接口返回 `APP Referer校验失败`，在[百度地图控制台](https://lbs.baidu.com/apiconsole/key/create#/home) 删除当前应用，重新创建应用并在 APP ID填 `*` [参考链接](https://blog.csdn.net/m0_73504190/article/details/131420444)
+
+## 优化
+
+开发初衷是为了能够支持各平台地图，满足需要不同地图的开发者，但是这会产生其他问题。一个项目一般情况下只用一个平台，没有用到的组件和SDK导致代码冗余，占用内存
+
+所以在设计的时候就将`<atl-map />`组件设计为一个入口组件，`<amap />`、`<tmap />`、`<bmap/>`为独立的子组件，可插拔。简而言之就是每个子组件可以单独使用，删除不用的组件可以减少体积。
+
+推荐选定自己使用的平台之后，删除其他不用的组件和SDK。
+
+比如：只用腾讯地图，删除其他地图组件，在`uni_modules/atl-map/components` 下，删除bmap、amap文件夹，修改入口文件`atl-map.vue`，只用`tmap`组件
+```vue
+<template>
+	<view>
+		<tmap :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey" :marker="marker" @confirm="confirm"></tmap>
+	</view>
+</template>
+```
+js只引入和注册`tmap`组件
+```js
+<script>
+import tmap from '../tmap/tmap.vue';
+
+	...
+	components: {
+		tmap,
+	},
+	...
+<script />
+```
+
+这样就减少冗余代码，节省内存
 
 
 ## 更新记录

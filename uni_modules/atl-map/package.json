@@ -1,85 +1,84 @@
 {
-  "id": "atl-map",
-  "displayName": "atl-map微信小程序高德、腾讯地图",
-  "version": "1.0.4",
-  "description": "简易好用的微信小程序地图定位，封装腾讯、高德地图sdk，atl-map开箱即用",
-  "keywords": [
-    "atl-map",
-    "定位",
-    "微信小程序地图",
-    "高德/腾讯地图"
-],
-  "repository": "https://github.com/13982720426/uniapp-plugin-atl-map.git",
-  "engines": {
-    "HBuilderX": "^3.91"
-  },
-  "dcloudext": {
-    "type": "component-vue",
-    "sale": {
-      "regular": {
-        "price": "0.00"
-      },
-      "sourcecode": {
-        "price": "0.00"
-      }
-    },
-    "contact": {
-      "qq": ""
-    },
-    "declaration": {
-      "ads": "无",
-      "data": "无",
-      "permissions": "mp-weixin：\n\"requiredPrivateInfos\": [\"getLocation\"],\n        \"permission\" : {\n            \"scope.userLocation\" : {\n                \"desc\" : \"开启定位\"\n            }\n        }"
-    },
-    "npmurl": ""
-  },
-  "uni_modules": {
-    "dependencies": [],
-    "encrypt": [],
-    "platforms": {
-      "cloud": {
-        "tcb": "y",
-        "aliyun": "y"
-      },
-      "client": {
-        "Vue": {
-          "vue2": "y",
-          "vue3": "y"
-        },
-        "App": {
-          "app-vue": "u",
-          "app-nvue": "u",
-          "app-uvue": "u"
-        },
-        "H5-mobile": {
-          "Safari": "u",
-          "Android Browser": "u",
-          "微信浏览器(Android)": "u",
-          "QQ浏览器(Android)": "u"
-        },
-        "H5-pc": {
-          "Chrome": "u",
-          "IE": "u",
-          "Edge": "u",
-          "Firefox": "u",
-          "Safari": "u"
-        },
-        "小程序": {
-          "微信": "y",
-          "阿里": "u",
-          "百度": "u",
-          "字节跳动": "u",
-          "QQ": "u",
-          "钉钉": "u",
-          "快手": "u",
-          "飞书": "u",
-          "京东": "u"
-        },
-        "快应用": {
-          "华为": "u",
-          "联盟": "u"
-        }
-      }
-    }
-  }
+	"id": "atl-map",
+	"displayName": "atl-map微信小程序高德、腾讯、百度地图",
+	"version": "1.1.0",
+	"description": "简易好用的微信小程序地图定位，封装腾讯、高德、百度地图sdk，atl-map开箱即用",
+	"keywords": [
+        "定位",
+        "微信小程序地图",
+        "高德/腾讯/百度地图"
+    ],
+	"repository": "https://github.com/13982720426/uniapp-plugin-atl-map.git",
+	"engines": {
+		"HBuilderX": "^3.91"
+	},
+	"dcloudext": {
+		"type": "component-vue",
+		"sale": {
+			"regular": {
+				"price": "0.00"
+			},
+			"sourcecode": {
+				"price": "0.00"
+			}
+		},
+		"contact": {
+			"qq": ""
+		},
+		"declaration": {
+			"ads": "无",
+			"data": "无",
+			"permissions": "mp-weixin：\n\"requiredPrivateInfos\": [\"getLocation\"],\n        \"permission\" : {\n            \"scope.userLocation\" : {\n                \"desc\" : \"开启定位\"\n            }\n        }"
+		},
+		"npmurl": ""
+	},
+	"uni_modules": {
+		"dependencies": [],
+		"encrypt": [],
+		"platforms": {
+			"cloud": {
+				"tcb": "y",
+				"aliyun": "y"
+			},
+			"client": {
+				"Vue": {
+					"vue2": "y",
+					"vue3": "y"
+				},
+				"App": {
+					"app-vue": "u",
+					"app-nvue": "u",
+					"app-uvue": "u"
+				},
+				"H5-mobile": {
+					"Safari": "u",
+					"Android Browser": "u",
+					"微信浏览器(Android)": "u",
+					"QQ浏览器(Android)": "u"
+				},
+				"H5-pc": {
+					"Chrome": "u",
+					"IE": "u",
+					"Edge": "u",
+					"Firefox": "u",
+					"Safari": "u"
+				},
+				"小程序": {
+					"微信": "y",
+					"阿里": "u",
+					"百度": "u",
+					"字节跳动": "u",
+					"QQ": "u",
+					"钉钉": "u",
+					"快手": "u",
+					"飞书": "u",
+					"京东": "u"
+				},
+				"快应用": {
+					"华为": "u",
+					"联盟": "u"
+				}
+			}
+		}
+	}
 }

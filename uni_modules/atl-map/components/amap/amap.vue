@@ -92,9 +92,9 @@ export default {
 			this.searchValue = '';
 			const { latitude, longitude } = e.detail;
 			if (!latitude || !longitude) return;
-			this.getRegeo([longitude,latitude],(pois)=>{
+			this.getRegeo([longitude, latitude], (pois) => {
 				this.searchList = pois;
-			})
+			});
 		},
 		getInputtips() {
 			this.amapPlugin.getInputtips({
@@ -106,19 +106,17 @@ export default {
 				}
 			});
 		},
-		getRegeo(coordinate,fn){
-		
+		getRegeo(coordinate, fn) {
 			this.lat = coordinate[1];
 			this.long = coordinate[0];
 			this.changeMarkers();
-			
 			this.amapPlugin.getRegeo({
 				location: this.long + ',' + this.lat,
 				success: (data) => {
 					const { regeocodeData } = data[0];
 					this.addressMap = regeocodeData.formatted_address;
 					this.regeocodeData = regeocodeData;
-					fn && fn(regeocodeData.pois)
+					fn && fn(regeocodeData.pois);
 				}
 			});
 		},
@@ -129,7 +127,7 @@ export default {
 		getCurrentSingleLocation(data) {
 			let coordinate = data.location.split(',');
 			this.searchValue = data.name;
-			this.getRegeo(coordinate)
+			this.getRegeo(coordinate);
 		},
 		close() {
 			this.$emit('confirm');

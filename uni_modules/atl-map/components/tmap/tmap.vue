@@ -5,7 +5,7 @@
 			<view class="address-text">
 				{{ currentAd.title || '' }}
 			</view>
-			<view class="confirm" @click="submit" :style="{backgroundColor:disable? 'rgba(0, 0, 0, 0.2)':'#42b983'}">确定</view>
+			<view class="confirm" @click="submit" :style="{ backgroundColor: disable ? 'rgba(0, 0, 0, 0.2)' : '#42b983' }">确定</view>
 		</view>
 		<map id="map" class="map" :longitude="long" :latitude="lat" show-location @tap="onTap" :markers="markers"></map>
 		<view class="search">
@@ -37,7 +37,7 @@ export default {
 	// 示例  <tmap @confirm="confirm" ></tmap>
 	// confirm(data){ data为选择的数据 }
 	name: 'tmap',
-	props: ['mapKey', 'longitude', 'latitude', 'marker','disable'],
+	props: ['mapKey', 'longitude', 'latitude', 'marker', 'disable'],
 	data() {
 		return {
 			lat: this.$props?.latitude, //经度
@@ -149,7 +149,7 @@ export default {
 		},
 		//确定
 		submit() {
-			if(this.$props.disable){
+			if (this.$props.disable) {
 				return;
 			}
 			const { lng: longitude, lat: latitude } = this.currentAd?.location;

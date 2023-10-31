@@ -93,9 +93,9 @@ export default {
 			const { latitude, longitude } = e.detail;
 			if (!latitude || !longitude) return;
 
-			this.getRegeo([longitude,latitude],(pois)=>{
+			this.getRegeo([longitude, latitude], (pois) => {
 				this.searchList = pois;
-			})
+			});
 		},
 		getInputtips() {
 			this.bmapPlugin.suggestion({
@@ -105,7 +105,7 @@ export default {
 				}
 			});
 		},
-		getRegeo(coordinate,fn){
+		getRegeo(coordinate, fn) {
 			this.long = coordinate[0];
 			this.lat = coordinate[1];
 			this.changeMarkers();
@@ -115,7 +115,7 @@ export default {
 					const { result } = data.originalData;
 					this.addressMap = result.formatted_address;
 					this.regeocodeData = result;
-					fn && fn(result.pois)
+					fn && fn(result.pois);
 				}
 			});
 		},
@@ -126,7 +126,7 @@ export default {
 		getCurrentSingleLocation(data) {
 			const { point, location } = data;
 			this.searchValue = data.name;
-			this.getRegeo([point?.x || location.lng,point?.y || location.lat])
+			this.getRegeo([point?.x || location.lng, point?.y || location.lat]);
 		},
 		close() {
 			this.$emit('confirm');
