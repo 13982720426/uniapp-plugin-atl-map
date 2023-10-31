@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<tmap v-if="mapType === 'tmap'" :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey" :marker="marker" @confirm="confirm"></tmap>
-		<amap v-else-if="mapType === 'amap'" :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey" :marker="marker" @confirm="confirm"></amap>
+		<amap v-if="mapType === 'amap'" :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey" :marker="marker" @confirm="confirm"></amap>
 		<bmap v-else-if="mapType === 'bmap'" :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey" :marker="marker" @confirm="confirm"></bmap>
+		<tmap v-else :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey" :marker="marker" @confirm="confirm"></tmap>
 	</view>
 </template>
 
@@ -49,7 +49,7 @@ export default {
 		return {};
 	},
 	created() {
-		console.log(11, this.$props);
+		// console.log(11, this.$props);
 	},
 	methods: {
 		confirm(e) {

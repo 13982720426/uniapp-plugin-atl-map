@@ -15,8 +15,8 @@
 		</view>
 		<view class="bot-box">
 			<view class="poi-list">
-				<view v-if="poiList.length !== 0" class="poi-item" v-for="item in poiList" :key="item.id" @click="select(item)">
-					<view class="">
+				<view class="poi-item" v-for="item in poiList" :key="item.id" @click="select(item)">
+					<view v-if="poiList.length !== 0">
 						<view class="poi-name">
 							{{ item.title }}
 						</view>
@@ -273,7 +273,7 @@ export default {
 
 			.poi-item:active {
 				color: #fff;
-				border: 1px solid $uni-color-primary;
+				border: 1px solid #42b983;
 			}
 		}
 	}

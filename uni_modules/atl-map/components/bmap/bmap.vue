@@ -17,8 +17,8 @@
 		</view>
 		<view class="bot-box">
 			<view class="poi-list">
-				<view v-if="searchList.length !== 0" class="poi-item" v-for="item in searchList" :key="item.uid" @click="getCurrentSingleLocation(item)">
-					<view class="">
+				<view class="poi-item" v-for="item in searchList" :key="item.uid" @click="getCurrentSingleLocation(item)">
+					<view v-if="poiList.length !== 0">
 						<view class="poi-name">
 							{{ item.name }}
 						</view>
@@ -92,29 +92,30 @@ export default {
 			this.searchValue = '';
 			const { latitude, longitude } = e.detail;
 			if (!latitude || !longitude) return;
-			/* 更新地图中心点位 start */
-			this.lat = latitude;
-			this.long = longitude;
-			/* 更新地图中心点位 end */
-			this.changeMarkers();
-			this.bmapPlugin.regeocoding({
-				location: latitude + ',' + longitude,
-				success: (data) => {
-					const { result } = data.originalData;
-					this.addressMap = result.formatted_address;
-					this.regeocodeData = result;
-					this.searchList = result.pois;
-				},
-				fail: (e) => {
-					console.log(1, e);
-				}
-			});
+
+			this.getRegeo([longitude,latitude],(pois)=>{
+				this.searchList = pois;
+			})
 		},
 		getInputtips() {
 			this.bmapPlugin.suggestion({
 				query: this.searchValue,
 				success: (data) => {
-					this.searchList = data.result.filter((i) => i?.uid?.length);
+					this.searchList = data.result.filter((i) => i?.uid && i?.location);
+				}
+			});
+		},
+		getRegeo(coordinate,fn){
+			this.long = coordinate[0];
+			this.lat = coordinate[1];
+			this.changeMarkers();
+			this.bmapPlugin.regeocoding({
+				location: this.lat + ',' + this.long,
+				success: (data) => {
+					const { result } = data.originalData;
+					this.addressMap = result.formatted_address;
+					this.regeocodeData = result;
+					fn && fn(result.pois)
 				}
 			});
 		},
@@ -123,22 +124,9 @@ export default {
 			this.getInputtips();
 		},
 		getCurrentSingleLocation(data) {
-			console.log(222, data);
 			const { point, location } = data;
-			/* 更新地图中心点位 start */
-			this.lat = point?.y || location.lat;
-			this.long = point?.x || location.lng;
-			this.changeMarkers();
-			/* 更新地图中心点位 end */
 			this.searchValue = data.name;
-			this.bmapPlugin.regeocoding({
-				location: this.lat + ',' + this.long,
-				success: (data) => {
-					const { result } = data.originalData;
-					this.addressMap = result.formatted_address;
-					this.regeocodeData = result;
-				}
-			});
+			this.getRegeo([point?.x || location.lng,point?.y || location.lat])
 		},
 		close() {
 			this.$emit('confirm');
@@ -277,7 +265,7 @@ export default {
 
 			.poi-item:active {
 				color: #fff;
-				border: 1px solid $uni-color-primary;
+				border: 1px solid #42b983;
 			}
 		}
 	}

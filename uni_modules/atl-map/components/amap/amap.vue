@@ -17,8 +17,8 @@
 		</view>
 		<view class="bot-box">
 			<view class="poi-list">
-				<view v-if="searchList.length !== 0" class="poi-item" v-for="item in searchList" :key="item.id" @click="getCurrentSingleLocation(item)">
-					<view class="">
+				<view class="poi-item" v-for="item in searchList" :key="item.id" @click="getCurrentSingleLocation(item)">
+					<view v-if="poiList.length !== 0">
 						<view class="poi-name">
 							{{ item.name }}
 						</view>
@@ -92,24 +92,9 @@ export default {
 			this.searchValue = '';
 			const { latitude, longitude } = e.detail;
 			if (!latitude || !longitude) return;
-			/* 更新地图中心点位 start */
-			this.lat = latitude;
-			this.long = longitude;
-			/* 更新地图中心点位 end */
-			this.changeMarkers();
-			let coordinate = longitude + ',' + latitude;
-			this.amapPlugin.getRegeo({
-				location: coordinate,
-				success: (data) => {
-					const { regeocodeData } = data[0];
-					this.addressMap = regeocodeData.formatted_address;
-					this.regeocodeData = regeocodeData;
-					this.searchList = regeocodeData.pois;
-				},
-				fail: (e) => {
-					console.log(1, e);
-				}
-			});
+			this.getRegeo([longitude,latitude],(pois)=>{
+				this.searchList = pois;
+			})
 		},
 		getInputtips() {
 			this.amapPlugin.getInputtips({
@@ -121,25 +106,30 @@ export default {
 				}
 			});
 		},
+		getRegeo(coordinate,fn){
+		
+			this.lat = coordinate[1];
+			this.long = coordinate[0];
+			this.changeMarkers();
+			
+			this.amapPlugin.getRegeo({
+				location: this.long + ',' + this.lat,
+				success: (data) => {
+					const { regeocodeData } = data[0];
+					this.addressMap = regeocodeData.formatted_address;
+					this.regeocodeData = regeocodeData;
+					fn && fn(regeocodeData.pois)
+				}
+			});
+		},
 		//搜索关键字
 		searchMap() {
 			this.getInputtips();
 		},
 		getCurrentSingleLocation(data) {
 			let coordinate = data.location.split(',');
-			/* 更新地图中心点位 start */
-			this.lat = coordinate[1];
-			this.long = coordinate[0];
-			this.changeMarkers();
-			/* 更新地图中心点位 end */
 			this.searchValue = data.name;
-			this.amapPlugin.getRegeo({
-				location: data.location,
-				success: (data) => {
-					this.addressMap = data[0].regeocodeData.formatted_address;
-					this.regeocodeData = data[0].regeocodeData;
-				}
-			});
+			this.getRegeo(coordinate)
 		},
 		close() {
 			this.$emit('confirm');
@@ -278,7 +268,7 @@ export default {
 
 			.poi-item:active {
 				color: #fff;
-				border: 1px solid $uni-color-primary;
+				border: 1px solid #42b983;
 			}
 		}
 	}
