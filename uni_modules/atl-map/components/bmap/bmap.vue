@@ -17,13 +17,13 @@
 		</view>
 		<view class="bot-box">
 			<view class="poi-list">
-				<view v-if="searchList.length !== 0" class="poi-item" v-for="item in searchList" :key="item.id" @click="getCurrentSingleLocation(item)">
+				<view v-if="searchList.length !== 0" class="poi-item" v-for="item in searchList" :key="item.uid" @click="getCurrentSingleLocation(item)">
 					<view class="">
 						<view class="poi-name">
 							{{ item.name }}
 						</view>
 						<view class="poi-address">
-							<view class="address">{{ item.address }}</view>
+							<view class="address">{{ item.address || item.addr }}</view>
 						</view>
 					</view>
 				</view>
@@ -34,18 +34,18 @@
 </template>
 
 <script>
-import amap from './amap-wx.js';
+import bmap from './bmap-wx.js';
 
 export default {
-	name: 'amap',
+	name: 'bmap',
 	props: ['longitude', 'latitude', 'mapKey', 'marker', 'disable'],
 	data() {
 		return {
 			addressMap: '',
 			searchValue: '',
 			markers: [],
-			amapPlugin: null,
-			key: this.$props?.mapKey, //高德地图key https://console.amap.com/dev/key/app 服务平台选择微信小程序
+			bmapPlugin: null,
+			key: this.$props?.mapKey,
 			lat: this.$props?.latitude,
 			long: this.$props?.longitude,
 			regeocodeData: {},
@@ -64,8 +64,8 @@ export default {
 			};
 		},
 		init() {
-			this.amapPlugin = new amap.AMapWX({
-				key: this.key
+			this.bmapPlugin = new bmap.BMapWX({
+				ak: this.key
 			});
 			const detail = {
 				longitude: this.$props?.longitude,
@@ -97,14 +97,13 @@ export default {
 			this.long = longitude;
 			/* 更新地图中心点位 end */
 			this.changeMarkers();
-			let coordinate = longitude + ',' + latitude;
-			this.amapPlugin.getRegeo({
-				location: coordinate,
+			this.bmapPlugin.regeocoding({
+				location: latitude + ',' + longitude,
 				success: (data) => {
-					const { regeocodeData } = data[0];
-					this.addressMap = regeocodeData.formatted_address;
-					this.regeocodeData = regeocodeData;
-					this.searchList = regeocodeData.pois;
+					const { result } = data.originalData;
+					this.addressMap = result.formatted_address;
+					this.regeocodeData = result;
+					this.searchList = result.pois;
 				},
 				fail: (e) => {
 					console.log(1, e);
@@ -112,12 +111,10 @@ export default {
 			});
 		},
 		getInputtips() {
-			this.amapPlugin.getInputtips({
-				key: this.key,
-				keywords: this.searchValue,
-				location: this.long + ',' + this.lat,
+			this.bmapPlugin.suggestion({
+				query: this.searchValue,
 				success: (data) => {
-					this.searchList = data.tips.filter((i) => i?.id?.length && i?.location);
+					this.searchList = data.result.filter((i) => i?.uid?.length);
 				}
 			});
 		},
@@ -126,18 +123,20 @@ export default {
 			this.getInputtips();
 		},
 		getCurrentSingleLocation(data) {
-			let coordinate = data.location.split(',');
+			console.log(222, data);
+			const { point, location } = data;
 			/* 更新地图中心点位 start */
-			this.lat = coordinate[1];
-			this.long = coordinate[0];
+			this.lat = point?.y || location.lat;
+			this.long = point?.x || location.lng;
 			this.changeMarkers();
 			/* 更新地图中心点位 end */
 			this.searchValue = data.name;
-			this.amapPlugin.getRegeo({
-				location: data.location,
+			this.bmapPlugin.regeocoding({
+				location: this.lat + ',' + this.long,
 				success: (data) => {
-					this.addressMap = data[0].regeocodeData.formatted_address;
-					this.regeocodeData = data[0].regeocodeData;
+					const { result } = data.originalData;
+					this.addressMap = result.formatted_address;
+					this.regeocodeData = result;
 				}
 			});
 		},

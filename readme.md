@@ -5,10 +5,11 @@
 [atl-map插件下载](https://ext.dcloud.net.cn/plugin?name=atl-map)
 
 ## 使用前准备
-
-### 申请高德或者腾讯地图key
+在平台创建应用并申请key
+### 申请高德、腾讯、百度地图key
 - 高德地图测试key 申请地址 https://console.amap.com/dev/key/app 服务平台选择微信小程序
 - 腾讯地图测试key 申请地址 https://lbs.qq.com/dev/console/application/mine  启用产品选择微信小程序
+- 百度地图测试key 申请地址 https://lbs.baidu.com/apiconsole/key/create#/home  应用类型选择微信小程序
 
 配置文件 `manifest.json` 微信小程序需要开启定位权限配置`requiredPrivateInfos`和`permission`
 ```json
@@ -55,10 +56,12 @@ export default {
 				width: 40
 				// iconPath: '/static/comm/position.png'
 			},
-			// mapKey: '42795f9a59358dxxxxxxxxx',//高德地图测试key 申请地址 https://console.amap.com/dev/key/app 服务平台选择微信小程序
+			// mapKey: '42795f9a59358dxxxxxxxxx',//高德地图测试key 
 			// mapType: 'amap'
 			mapType: 'tmap',
-			mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ' //腾讯地图测试key 限量测试 申请地址 https://lbs.qq.com/dev/console/application/mine  启用产品选择微信小程序
+			mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ' //腾讯地图测试key 
+			// mapKey: 'p5mGzPEt30bwv1yEkeQGxxxx', //百度地图key
+			// mapType: 'bmap' //百度地图
 		};
 	},
 	methods: {
@@ -81,21 +84,24 @@ export default {
 
 ## API
 
-|  参数   | 说明  | 类型 | 默认值 |
-|  -----  | ----------------  | ---- | ---------------- |
-| mapKey | `必填`，地图KEY | `String`| 腾讯测试key(每日限量) |
-| mapType | `非必填`，地图类型(腾讯:'tmap',高德:'amap') | `String`| tmap |
-| longitude | `非必填`，经度 | `String、Number`| 当前定位 |
-| latitude | `非必填`，纬度 | `String、Number`| 当前定位 |
-| marker | `非必填`，点位配置，只支持一个点位| `Object`| [uniapp map组件](https://uniapp.dcloud.net.cn/component/map.html#marker)默认值 |
-| disable | `非必填`，确定按钮是否禁用 | `Boolean`| false |
-| confirm | `非必填`，点击确定事件 | `Function`| 返回值`{title:'标题',latitude:'纬度',longitude:'经度',address:'详细地址',...高德/腾讯地图其他参数}`|
+|  参数			| 说明																										| 类型							| 默认值																																																	|
+|  -----		| ----------------																			| ----						| ----------------																																											|
+| mapKey		| `必填`，地图KEY																				| `String`				| 腾讯测试key(每日限量)																																									|
+| mapType		| `非必填`，地图类型(腾讯:'tmap',高德:'amap',百度:'bmap')	| `String`				| tmap																																																	|
+| longitude	| `非必填`，经度																					| `String、Number`	| 当前定位																																																|
+| latitude	| `非必填`，纬度																					| `String、Number`	| 当前定位																																																|
+| marker		| `非必填`，点位配置，只支持一个点位											| `Object`				| [uniapp map组件](https://uniapp.dcloud.net.cn/component/map.html#marker)默认值													|
+| disable		| `非必填`，确定按钮是否禁用															| `Boolean`				| false																																																	|
+| confirm		| `非必填`，点击确定事件																	| `Function`			| 返回值`{title:'标题',latitude:'纬度',longitude:'经度',address:'详细地址',...高德/腾讯/百度地图其他参数}`	|
 
 ## 注意事项
 
 1. [腾讯地图key](https://lbs.qq.com/dev/console/application/mine) 每日限量测试，请自行申请
 2. 目前只支持微信小程序，其他平台请下载源码自行测试修改[github地址](https://github.com/13982720426/uniapp-plugin-atl-map.git)
-3. 本项目使用vue2语法，vue3的OptionsAPI也是支持的
+3. 本项目使用vue2语法，vue3也是支持的
+4. 微信小程序可能需要设置服务器域名，[登录小程序平台](https://mp.weixin.qq.com/wxamp/index/index) 服务器域名 -> request合法域名(填入用到的平台域名 `https://api.map.baidu.com;https://apis.map.qq.com;https://restapi.amap.com;`
+5. 百度地图如果遇到接口返回 `APP Referer校验失败`，在[百度地图控制台](https://lbs.baidu.com/apiconsole/key/create#/home) 删除当前应用，重新创建应用并在 APP ID填 `*` [参考链接](https://blog.csdn.net/m0_73504190/article/details/131420444)
+
 
 ## 更新记录
 [查看日志](https://github.com/13982720426/uniapp-plugin-atl-map/blob/master/uni_modules/atl-map/changelog.md)

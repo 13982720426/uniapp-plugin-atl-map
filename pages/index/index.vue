@@ -10,7 +10,6 @@
 </template>
 
 <script>
-	
 export default {
 	data() {
 		return {
@@ -26,10 +25,12 @@ export default {
 				width: 40
 				// iconPath: '/static/comm/position.png'
 			},
-			// mapKey: '42795f9a59358dxxxxxxxxx',//高德地图测试key 申请地址 https://console.amap.com/dev/key/app 服务平台选择微信小程序
+			// mapKey: '42795f9a59358dxxxxxxxxx',//高德地图测试key
 			// mapType: 'amap'
-			mapType: 'tmap',
-			mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ' //腾讯地图测试key 限量测试 申请地址 https://lbs.qq.com/dev/console/application/mine  启用产品选择微信小程序
+			// mapType: 'tmap',
+			// mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ' //腾讯地图测试key
+			mapKey: 'p5mGzPEt30bwv1yEkeQGsGP4Xrs981Gf', //百度地图
+			mapType: 'bmap'
 		};
 	},
 	onLoad() {},
