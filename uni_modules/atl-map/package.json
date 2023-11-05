@@ -1,7 +1,7 @@
 {
 	"id": "atl-map",
 	"displayName": "atl-map微信小程序高德、腾讯、百度地图",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "简易好用的微信小程序地图定位，封装腾讯、高德、百度地图sdk，atl-map开箱即用",
 	"keywords": [
         "定位",

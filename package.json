@@ -1,0 +1,15 @@
+{
+  "name": "uniapp-plugin-atl-map",
+  "version": "1.1.1",
+  "description": "简易好用的微信小程序地图定位，封装腾讯、高德、百度地图sdk，atl-map开箱即用",
+  "main": "main.js",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "jackhoo",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^8.0.0"
+  }
+}
