@@ -1,6 +1,8 @@
 # atl-map微信小程序高德、腾讯、百度地图
 
-简易好用的微信小程序地图定位，封装腾讯、高德、百度地图sdk，atl-map开箱即用
+简易好用的微信小程序地图定位，封装腾讯、高德、百度地图sdk，atl-map开箱即用。
+
+支持点击定位获取具体位置信息和经纬度，地图搜索，经纬度解析（逆地理编码：经纬度->地点描述），新增内容插槽支持自定义内容
 
 [atl-map插件下载](https://ext.dcloud.net.cn/plugin?name=atl-map)
 
@@ -30,12 +32,27 @@
 ```vue
 <template>
 	<view class="">
-		<view class="">地址：{{ title }}</view>
-		<view class="">详细地址：{{ address }}</view>
-		<view class="" style="width: 90vw; margin: 5vw">
-			<button @click="show = true;">点击打开地图</button>
+		<view style="padding:5vw">
+			<view class="">地址：{{ title }}</view>
+			<view class="">详细地址：{{ address }}</view>
+			<view class="">经度：{{ longitude }}</view>
+			<view class="">纬度：{{ latitude }}</view>
 		</view>
-		<atl-map :disable="disable" v-if="show" :longitude="longitude" :latitude="latitude" :marker="marker" :mapKey="mapKey" :mapType="mapType" @confirm="confirm"></atl-map>
+		<view style="width: 90vw; margin: 5vw">
+			<button @click="onClick">点击打开地图</button>
+		</view>
+		<atl-map :disable="disable" v-if="show" :longitude="longitude" :latitude="latitude" :marker="marker"
+			:mapKey="mapKey" :mapType="mapType" @confirm="confirm">
+			<template v-slot:content>
+				<view style="position: absolute; bottom: 0;width: 100%;height: 24px; background-color: white;">
+					<view style="display: flex;align-items: center; justify-content: center;">
+						<image style="width: 24px; height: 24px;" src="/static/logo.png">
+						</image>
+						<text> 内容插槽 </text>
+					</view>
+				</view>
+			</template>
+		</atl-map>
 	</view>
 </template>
 ```
@@ -61,7 +78,7 @@ export default {
 			mapType: 'tmap',
 			mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ' //腾讯地图测试key (每日限量，请自行申请)
 			// mapKey: 'p5mGzPEt30bwv1yEkeQGxxxx', //百度地图key
-			// mapType: 'bmap' //百度地图
+			// mapType: 'bmap' AAA
 		};
 	},
 	methods: {
@@ -84,15 +101,23 @@ export default {
 
 ## API
 
-|  参数			| 说明																										| 类型							| 默认值																																					|
-|  -----		| ----------------																			| ----						| ----------------																															|
-| mapKey		| `必填`，地图KEY																				| `String`				| 腾讯测试key(每日限量)																													|
-| mapType		| `非必填`，地图类型(腾讯:'tmap',高德:'amap',百度:'bmap')	| `String`				| tmap																																					|
-| longitude	| `非必填`，经度																					| `String、Number`	| 当前定位																																				|
-| latitude	| `非必填`，纬度																					| `String、Number`	| 当前定位																																				|
-| marker		| `非必填`，点位配置，只支持一个点位											| `Object`				| [uniapp map组件](https://uniapp.dcloud.net.cn/component/map.html#marker)默认值	|
-| disable		| `非必填`，确定按钮是否禁用															| `Boolean`				| false																																					|
-| confirm		| `非必填`，点击确定事件																	| `Function`			| 返回值`{title,latitude,longitude,address,...高德/腾讯/百度地图其他参数}`				|
+### Props
+
+|  参数		| 说明													| 类型				| 默认值																			|
+|  -----	| ----------------										| ----				| ----------------																|
+| mapKey	| `必填`，地图KEY										| `String`			| 腾讯测试key(每日限量)															|
+| mapType	| `非必填`，地图类型(腾讯:'tmap',高德:'amap',百度:'bmap')	| `String`			| tmap																			|
+| longitude	| `非必填`，经度											| `String、Number`	| 当前定位																		|
+| latitude	| `非必填`，纬度											| `String、Number`	| 当前定位																		|
+| marker	| `非必填`，点位配置，只支持一个点位						| `Object`			| [uniapp map组件](https://uniapp.dcloud.net.cn/component/map.html#marker)默认值	|
+| disable	| `非必填`，确定按钮是否禁用								| `Boolean`			| false																			|
+| confirm	| `非必填`，点击确定事件									| `Function`		| 返回值`{title,latitude,longitude,address,...高德/腾讯/百度地图其他参数}`			|
+
+### Solt
+
+|  名称		| 说明						| 其他																												|
+|  -----	| ----------------			| -----																												|
+| content	| `非必填`，自定义content内容	| 使用的是uniapp [cover-view组件](https://uniapp.dcloud.net.cn/component/cover-view.html#cover-view)小程序注意事项请看官网	|
 
 
 ## 注意事项
