@@ -14,7 +14,7 @@
 			<template v-slot:content>
 				<view style="position: absolute; bottom: 0;width: 100%;height: 24px; background-color: white;">
 					<view style="display: flex;align-items: center; justify-content: center;">
-						<image style="width: 24px; height: 24px;" src="/static/logo.png">
+						<image style="width: 24px; height: 24px;" :src="imageSrc">
 						</image>
 						<text> 内容插槽 </text>
 					</view>
@@ -34,6 +34,7 @@
 				address: '',
 				longitude: '',
 				latitude: '',
+				imageSrc: "/static/logo.png", //自定义图片
 				marker: {
 					id: 1,
 					height: 50,

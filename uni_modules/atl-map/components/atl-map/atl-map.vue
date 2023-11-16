@@ -1,5 +1,6 @@
 <template>
 	<view>
+
 		<amap v-if="mapType === 'amap'" :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey"
 			:marker="marker" @confirm="confirm">
 			<template v-slot:content>
@@ -30,11 +31,11 @@
 		name: 'atl-map',
 		props: {
 			longitude: {
-				type: String | Number,
+				type: String,
 				default: ''
 			},
 			latitude: {
-				type: String | Number,
+				type: String,
 				default: ''
 			},
 			mapKey: {
