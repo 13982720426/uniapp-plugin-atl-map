@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "husky": "^8.0.0"
+  },
+  "dependencies": {
+    "@turf/boolean-point-in-polygon": "^6.5.0"
   }
 }

@@ -8,7 +8,8 @@
 			<view class="confirm" @click="submit"
 				:style="{ backgroundColor: disable ? 'rgba(0, 0, 0, 0.2)' : '#42b983' }">确定</view>
 		</view>
-		<map id="map" class="map" :longitude="long" :latitude="lat" show-location @tap="onTap" :markers="markers">
+		<map id="map" class="map" :longitude="long" :latitude="lat" show-location @tap="onTap" :markers="markers"
+			:polygons="isPolygons?polygons:[]">
 			<cover-view>
 				<slot name="content"></slot>
 			</cover-view>
@@ -1201,6 +1202,14 @@
 				type: Boolean,
 				default: false
 			},
+			isPolygons: {
+				type: Boolean,
+				default: false
+			},
+			polygons: {
+				type: Array,
+				default: () => []
+			}
 		},
 		data() {
 			return {
@@ -1270,6 +1279,11 @@
 					success: (data) => {
 						that.poiList = data.result.pois;
 						that.currentAd = that.poiList[0];
+						that.$emit('changeMarker', {
+							...that.currentAd,
+							longitude: that.currentAd.location.lng,
+							latitude: that.currentAd.location.lat,
+						});
 					},
 					fail: (e) => {
 						uni.showToast({
@@ -1318,6 +1332,11 @@
 				this.lat = latitude;
 				this.long = longitude;
 				this.changeMarkers();
+				this.$emit('changeMarker', {
+					...this.currentAd,
+					longitude,
+					latitude,
+				});
 			},
 			//确定
 			submit() {
@@ -1336,9 +1355,6 @@
 				};
 				this.$emit('confirm', this.currentAd);
 			},
-			clickImage(e) {
-				console.log(e)
-			}
 		}
 	};
 </script>

@@ -8,12 +8,12 @@
 			<view class="confirm" @click="submit"
 				:style="{ backgroundColor: disable ? 'rgba(0, 0, 0, 0.2)' : '#42b983' }">确定</view>
 		</view>
-		<view class="" @tap="getCurrentLocation">
-			<map class="map" id="map" :latitude="lat" :longitude="long" scale="18" show-location :markers="markers"
-				@tap="getCurrentLocation" @anchorpointtap="anchorpointtap"> <cover-view>
-					<slot name="content"></slot>
-				</cover-view></map>
-		</view>
+		<map class="map" id="map" :latitude="lat" :longitude="long" scale="18" show-location :markers="markers"
+			@tap="getCurrentLocation" :polygons="isPolygons?polygons:[]">
+			<cover-view>
+				<slot name="content"></slot>
+			</cover-view>
+		</map>
 		<view class="search">
 			<view class="search-input">
 				<input placeholder="请输入关键词" v-model="searchValue" type="text" maxlength="64" @input="searchMap" />
@@ -511,6 +511,14 @@
 				type: Boolean,
 				default: false
 			},
+			isPolygons: {
+				type: Boolean,
+				default: false
+			},
+			polygons: {
+				type: Array,
+				default: () => []
+			}
 		},
 		data() {
 			return {
@@ -597,8 +605,9 @@
 						} = data.originalData;
 						this.addressMap = result.formatted_address;
 						this.regeocodeData = result;
+						this.$emit('changeMarker', this.getConfirmData());
 						fn && fn(result.pois);
-					}
+					},
 				});
 			},
 			//搜索关键字
@@ -616,6 +625,24 @@
 			close() {
 				this.$emit('confirm');
 			},
+			getConfirmData() {
+				const {
+					pois,
+					addressComponent: {
+						province,
+						district,
+						township
+					}
+				} = this.regeocodeData;
+				const title = pois?.[0]?.name || province + district + township;
+				return {
+					...this.regeocodeData,
+					title,
+					latitude: this.lat,
+					longitude: this.long,
+					address: this.addressMap
+				}
+			},
 			submit(e) {
 				if (this.$props.disable) {
 					return;
@@ -624,22 +651,7 @@
 					return;
 				}
 				if (JSON.stringify(this.regeocodeData) != '{}') {
-					const {
-						pois,
-						addressComponent: {
-							province,
-							district,
-							township
-						}
-					} = this.regeocodeData;
-					const title = pois?.[0]?.name || province + district + township;
-					this.$emit('confirm', {
-						...this.regeocodeData,
-						title,
-						latitude: this.lat,
-						longitude: this.long,
-						address: this.addressMap
-					});
+					this.$emit('confirm', this.getConfirmData());
 				}
 			}
 		}

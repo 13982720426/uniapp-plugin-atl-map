@@ -2,19 +2,21 @@
 	<view>
 
 		<amap v-if="mapType === 'amap'" :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey"
-			:marker="marker" @confirm="confirm">
+			:marker="marker" @confirm="confirm" @changeMarker="changeMarker" :polygons="polygons"
+			:isPolygons="isPolygons">
 			<template v-slot:content>
 				<slot name="content"></slot>
 			</template>
 		</amap>
 		<bmap v-else-if="mapType === 'bmap'" :disable="disable" :longitude="longitude" :latitude="latitude"
-			:mapKey="mapKey" :marker="marker" @confirm="confirm">
+			:mapKey="mapKey" :marker="marker" @changeMarker="changeMarker" @confirm="confirm" :polygons="polygons"
+			:isPolygons="isPolygons">
 			<template v-slot:content>
 				<slot name="content"></slot>
 			</template>
 		</bmap>
 		<tmap v-else :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey" :marker="marker"
-			@confirm="confirm">
+			@confirm="confirm" @changeMarker="changeMarker" :polygons="polygons" :isPolygons="isPolygons">
 			<template v-slot:content>
 				<slot name="content"></slot>
 			</template>
@@ -55,6 +57,14 @@
 				type: Boolean,
 				default: false
 			},
+			isPolygons: {
+				type: Boolean,
+				default: false
+			},
+			polygons: {
+				type: Array,
+				default: () => []
+			},
 		},
 		components: {
 			amap,
@@ -70,6 +80,9 @@
 		methods: {
 			confirm(e) {
 				this.$emit('confirm', e);
+			},
+			changeMarker(e) {
+				this.$emit('changeMarker', e);
 			}
 		}
 	};

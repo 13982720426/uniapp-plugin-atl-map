@@ -10,7 +10,8 @@
 			<button @click="onClick">点击打开地图</button>
 		</view>
 		<atl-map :disable="disable" v-if="show" :longitude="longitude" :latitude="latitude" :marker="marker"
-			:mapKey="mapKey" :mapType="mapType" @confirm="confirm">
+			:mapKey="mapKey" :mapType="mapType" @confirm="confirm" @changeMarker="changeMarker" :polygons="polygons"
+			:isPolygons="true">
 			<template v-slot:content>
 				<view style="position: absolute; bottom: 0;width: 100%;height: 24px; background-color: white;">
 					<view style="display: flex;align-items: center; justify-content: center;">
@@ -25,9 +26,63 @@
 </template>
 
 <script>
+	import
+	booleanPointInPolygon
+	from '@turf/boolean-point-in-polygon'
+	import {
+		point,
+		polygon
+	} from '@turf/helpers'
 	export default {
 		data() {
 			return {
+				polygons: [{
+					points: [{
+							longitude: '106.57',
+							latitude: '29.52'
+						},
+						{
+							longitude: '106.57',
+							latitude: '29.53'
+						},
+						{
+							longitude: '106.55',
+							latitude: '29.53'
+						},
+						{
+							longitude: '106.55',
+							latitude: '29.52'
+						},
+						{
+							longitude: '106.57',
+							latitude: '29.52'
+						}
+					],
+					strokeWidth: 1,
+					strokeColor: '#ff000066',
+					fillColor: '#ff000016'
+				}, {
+					points: [{
+							longitude: '106.57',
+							latitude: '29.51'
+						},
+						{
+							longitude: '106.57',
+							latitude: '29.515'
+						},
+						{
+							longitude: '106.55',
+							latitude: '29.515'
+						},
+						{
+							longitude: '106.57',
+							latitude: '29.51'
+						}
+					],
+					strokeWidth: 1,
+					strokeColor: '#ff000066',
+					fillColor: '#ff000016'
+				}],
 				disable: false,
 				show: false,
 				title: '',
@@ -42,20 +97,30 @@
 					// iconPath: '/static/comm/position.png'
 				},
 				// mapKey: '42795f9a59358dea58a8bxxx',//高德地图测试key
-				// mapType: 'amap',
-				// mapType: 'tmap',
-				mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ' //腾讯地图测试key
-				// mapKey: 'p5mGzPEt30bwv1yEkeQxxx', //百度地图
-				// mapType: 'bmap'
+				mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ', //腾讯地图测试key
+				// mapKey: 'p5mGzPEt30bwv1yEkeQGsGP4Xrs9xxxx', //百度地图
+				mapType: 'tmap' // tmap bmap amap
 			};
 		},
 		onLoad() {},
 		methods: {
+			changeMarker(e) {
+				const {
+					latitude,
+					longitude
+				} = e
+				const _polygons = this.polygons.map(polygon => {
+					return polygon.points.map(i => ([Number(i.longitude), Number(i.latitude)]))
+				})
+				const _point = point([longitude, latitude])
+				const _polygon = polygon(_polygons)
+				// 根据电子围栏判断否禁用
+				this.disable = booleanPointInPolygon(_point, _polygon)
+			},
 			onClick() {
 				this.show = true;
 			},
 			confirm(e) {
-				console.log(22, e);
 				if (e) {
 					this.longitude = e.longitude;
 					this.latitude = e.latitude;
