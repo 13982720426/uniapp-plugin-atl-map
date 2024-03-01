@@ -2,7 +2,7 @@
 
 简易好用的微信小程序地图定位，封装腾讯、高德、百度地图 sdk，atl-map 开箱即用。
 
-支持点击定位获取具体位置信息和经纬度，地图搜索，经纬度解析（逆地理编码：经纬度->地点描述），新增内容插槽支持自定义内容
+支持点击定位获取具体位置信息和经纬度，地图搜索，经纬度解析（逆地理编码：经纬度->地点描述），新增内容插槽支持自定义内容，电子围栏(地图多边形)
 
 [atl-map 插件下载](https://ext.dcloud.net.cn/plugin?name=atl-map)
 
@@ -33,6 +33,84 @@
 ```
 
 ## 基本使用
+
+### vue 模板
+
+```vue
+<template>
+	<view class="">
+		<view style="padding: 20px">
+			<view class="">地址：{{ title }}</view>
+			<view class="">详细地址：{{ address }}</view>
+			<view class="">经度：{{ longitude }}</view>
+			<view class="">纬度：{{ latitude }}</view>
+		</view>
+		<view style="width: 90vw; margin: 5vw">
+			<button @click="onClick">点击打开地图</button>
+		</view>
+		<atl-map :disable="disable" v-if="show" :longitude="longitude" :latitude="latitude" :marker="marker" :mapKey="mapKey" :mapType="mapType" @confirm="confirm">
+			<template v-slot:content>
+				<view style="position: absolute; bottom: 0; width: 100%; height: 24px; background-color: white">
+					<view style="display: flex; align-items: center; justify-content: center">
+						<image style="width: 24px; height: 24px" :src="imageSrc"></image>
+						<text>内容插槽</text>
+					</view>
+				</view>
+			</template>
+		</atl-map>
+	</view>
+</template>
+```
+
+### js 代码
+
+```javascript
+export default {
+	data() {
+		return {
+			disable: false,
+			show: false,
+			title: '',
+			address: '',
+			longitude: '',
+			latitude: '',
+			imageSrc: '/static/logo.png', //自定义图片
+			marker: {
+				id: 1,
+				height: 50,
+				width: 40
+				// iconPath: '/static/comm/position.png'
+			},
+			// mapKey: '42795f9a59358dea58a8bxxx',//高德地图测试key
+			mapKey: 'ZNJBZ-E6RHJ-EV3F2-DL73K-ARTTH-3EBRZ', //腾讯地图测试key
+			// mapKey: 'p5mGzPEt30bwv1yEkeQGsGP4Xrs9xxxx', //百度地图
+			mapType: 'tmap' // tmap bmap amap
+		};
+	},
+	onLoad() {},
+	methods: {
+		onClick() {
+			this.show = true;
+		},
+		confirm(e) {
+			if (e) {
+				this.longitude = e.longitude;
+				this.latitude = e.latitude;
+				this.title = e.title;
+				this.address = e.address;
+			}
+			this.show = false;
+		}
+	}
+};
+```
+
+## 电子围栏案例
+
+添加了电子围栏demo，因为使用第三方插件判断是否在范围内，**<span style="color: red"> 重要！！！ </span>** 需要在项目中额外下载 @turf/boolean-point-in-polygon 插件 或者是自己写个方法判断是否在范围内
+
+`npm i @turf/boolean-point-in-polygon`
+
 
 ### vue 模板
 
