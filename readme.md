@@ -276,24 +276,26 @@ export default {
 
 ### Props
 
-| 参数         | 说明                                                                                                                                                                                                              | 类型       | 默认值                                                                                            |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------- |
-| mapKey       | <span style="color: red">`必填`</span>，地图 KEY                                                                                                                                                                  | `String`   | 腾讯测试 key(每日限量)                                                                            |
-| mapType      | `非必填`，地图类型(腾讯:'tmap',高德:'amap',百度:'bmap')                                                                                                                                                           | `String`   | tmap                                                                                              |
-| longitude    | `非必填`，经度                                                                                                                                                                                                    | `String`   | 当前定位                                                                                          |
-| latitude     | `非必填`，纬度                                                                                                                                                                                                    | `String`   | 当前定位                                                                                          |
-| marker       | `非必填`，点位配置，只支持一个点位                                                                                                                                                                                | `Object`   | [uniapp map 组件](https://uniapp.dcloud.net.cn/component/map.html#marker)默认值                   |
-| disable      | `非必填`，确定按钮是否禁用                                                                                                                                                                                        | `Boolean`  | false                                                                                             |
-| isPolygons   | `非必填`，是否显示多边形(电子围栏)                                                                                                                                                                                | `Boolean`  | false                                                                                             |
-| polygons     | `非必填`，多边形配置(具体配置请看案例或者官网说明)                                                                                                                                                                | `Array`    | `[]`，[uniapp map 组件](https://uniapp.dcloud.net.cn/component/map.html#marker) polygons 配置说明 |
-| changeMarker | `非必填`，点位变化事件(可以通过 [turf](https://turfjs.fenxianglu.cn/category/booleans/booleanPointInPolygon.html#booleanpointinpolygon) 插件判断是否在电子围栏内，再配合 disable 属性使用，具体使用参考完整 demo) | `Function` | 返回值`{title,latitude,longitude,address,...高德/腾讯/百度地图其他参数}`                          |
-| confirm      | `非必填`，点击确定事件                                                                                                                                                                                            | `Function` | 返回值`{title,latitude,longitude,address,...高德/腾讯/百度地图其他参数}`                          |
+| 参数				| 说明																																																																																																								| 类型								| 默认值																																															|
+| ------------| -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	| ----------				| -------------------------------------------------------------------------------------------------	|
+| mapKey			| <span style="color: red">`必填`</span>，地图 KEY																																																																																		| `String`					| 腾讯测试 key(每日限量)																																							|
+| mapType			| `非必填`，地图类型(腾讯:'tmap',高德:'amap',百度:'bmap')																																																																															| `String`					| tmap																																															|
+| longitude		| `非必填`，经度																																																																																																			| `String`					| 当前定位																																														|
+| latitude		| `非必填`，纬度																																																																																																			| `String`					| 当前定位																																														|
+| marker			| `非必填`，点位配置，只支持一个点位																																																																																									| `Object`					| [uniapp map 组件](https://uniapp.dcloud.net.cn/component/map.html#marker)默认值										|
+| disable			| `非必填`，确定按钮是否禁用																																																																																													| `Boolean`					| false																																															|
+| isPolygons	| `非必填`，是否显示多边形(电子围栏)																																																																																									| `Boolean`					| false																																															|
+| polygons		| `非必填`，多边形配置(具体配置请看案例或者官网说明)																																																																																		| `Array`						| `[]`，[uniapp map 组件](https://uniapp.dcloud.net.cn/component/map.html#marker) polygons 配置说明	|
+| isCustomBar	| `非必填`，是否自定义顶部(一般自定义顶部标题栏时使用)																																																																																	| `Boolean`					| false	(自定义顶部标题栏时留出[胶囊按钮](https://uniapp.dcloud.net.cn/api/ui/menuButton.html#getmenubuttonboundingclientrect)安全距离)																																														|
+| top					| `非必填`，地图距离顶部位置(一般自定义顶部标题栏时使用)																																																																																| `String`、`Number`	| 原生标题栏时，默认值:0，`"navigationStyle": "custom"`为自定义标题栏时，默认值:30											|
+| changeMarker| `非必填`，点位变化事件(可以通过 [turf](https://turfjs.fenxianglu.cn/category/booleans/booleanPointInPolygon.html#booleanpointinpolygon) 插件判断是否在电子围栏内，再配合 disable 属性使用，具体使用参考完整 demo)			| `Function`				| 返回值`{title,latitude,longitude,address,...高德/腾讯/百度地图其他参数}`														|
+| confirm			| `非必填`，点击确定事件																																																																																															| `Function`				| 返回值`{title,latitude,longitude,address,...高德/腾讯/百度地图其他参数}`														|
 
 ### Solt
 
-| 名称    | 说明                | 其他                                                                                                                       |
-| ------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| content | 自定义 content 内容 | 使用的是 uniapp [cover-view 组件](https://uniapp.dcloud.net.cn/component/cover-view.html#cover-view)小程序注意事项请看官网 |
+| 名称		| 说明									| 其他																																																												|
+| -------	| -------------------	| --------------------------------------------------------------------------------------------------------------------------|
+| content	| 自定义 content 内容	| 使用的是 uniapp [cover-view 组件](https://uniapp.dcloud.net.cn/component/cover-view.html#cover-view)小程序注意事项请看官网		|
 
 ## 注意事项
 

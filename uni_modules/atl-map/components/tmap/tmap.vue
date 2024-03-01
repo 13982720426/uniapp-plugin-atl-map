@@ -1,5 +1,12 @@
 <template>
-	<view class="map-content">
+	<view class="map-content" :style="[
+			isCustomBar && {
+				height: customBarH + 'px',
+				paddingTop: statusBarH + 'px',
+				backgroundColor: 'transparent',
+				top: top + 'px',
+			},
+		]">
 		<view class="top">
 			<view class="cancel" @click="closeMap">取消</view>
 			<view class="address-text">
@@ -1209,10 +1216,20 @@
 			polygons: {
 				type: Array,
 				default: () => []
+			},
+			top: {
+				type: String | Number,
+				default: 30
+			},
+			isCustomBar: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
 			return {
+				statusBarH: 0,
+				customBarH: 0,
 				lat: this.$props?.latitude, //经度
 				long: this.$props?.longitude, //维度
 				key: this.$props?.mapKey,
@@ -1232,6 +1249,18 @@
 			setTimeout(() => {
 				this.initData();
 			}, 100);
+			let self = this
+			uni.getSystemInfo({
+				success: function(e) {
+					self.statusBarH = e.statusBarHeight + 5
+					if (uni.getMenuButtonBoundingClientRect?.()) {
+						let custom = uni.getMenuButtonBoundingClientRect()
+						self.customBarH = custom.height + 5
+					} else {
+						self.customBarH = 30
+					}
+				},
+			})
 		},
 		methods: {
 			//初始化
@@ -1417,9 +1446,10 @@
 		}
 
 		.search {
-			margin: 10rpx 20rpx;
+			padding: 10rpx 20rpx;
 			display: flex;
 			justify-content: center;
+			background-color: #fff;
 
 			input {
 				flex: 1;
@@ -1432,9 +1462,11 @@
 		}
 
 		.bot-box {
+
 			height: calc(50vh - 50px);
 			overflow: auto;
 			width: 100vw;
+			background-color: #fff;
 
 			.empty {
 				margin-top: 40rpx;

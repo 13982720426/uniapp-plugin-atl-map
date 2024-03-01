@@ -3,20 +3,21 @@
 
 		<amap v-if="mapType === 'amap'" :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey"
 			:marker="marker" @confirm="confirm" @changeMarker="changeMarker" :polygons="polygons"
-			:isPolygons="isPolygons">
+			:isPolygons="isPolygons" :isCustomBar="isCustomBar" :top='top'>
 			<template v-slot:content>
 				<slot name="content"></slot>
 			</template>
 		</amap>
 		<bmap v-else-if="mapType === 'bmap'" :disable="disable" :longitude="longitude" :latitude="latitude"
 			:mapKey="mapKey" :marker="marker" @changeMarker="changeMarker" @confirm="confirm" :polygons="polygons"
-			:isPolygons="isPolygons">
+			:isPolygons="isPolygons" :isCustomBar="isCustomBar" :top='top'>
 			<template v-slot:content>
 				<slot name="content"></slot>
 			</template>
 		</bmap>
 		<tmap v-else :disable="disable" :longitude="longitude" :latitude="latitude" :mapKey="mapKey" :marker="marker"
-			@confirm="confirm" @changeMarker="changeMarker" :polygons="polygons" :isPolygons="isPolygons">
+			@confirm="confirm" @changeMarker="changeMarker" :polygons="polygons" :isPolygons="isPolygons"
+			:isCustomBar="isCustomBar" :top='top'>
 			<template v-slot:content>
 				<slot name="content"></slot>
 			</template>
@@ -65,6 +66,14 @@
 				type: Array,
 				default: () => []
 			},
+			top: {
+				type: String | Number,
+				default: 30
+			},
+			isCustomBar: {
+				type: Boolean,
+				default: false
+			}
 		},
 		components: {
 			amap,
