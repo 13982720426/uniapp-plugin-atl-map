@@ -720,6 +720,7 @@
 			box-sizing: border-box;
 			background-color: rgba(0, 0, 0, 0.2);
 			color: #fff;
+			z-index: 999;
 
 			.confirm {
 				height: 60rpx;
