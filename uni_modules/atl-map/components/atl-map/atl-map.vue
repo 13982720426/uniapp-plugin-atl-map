@@ -67,7 +67,7 @@
 				default: () => []
 			},
 			top: {
-				type: String | Number,
+				type: [String, Number],
 				default: 30
 			},
 			isCustomBar: {
