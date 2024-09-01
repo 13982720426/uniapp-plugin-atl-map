@@ -111,6 +111,9 @@ export default {
 
 `npm i @turf/boolean-point-in-polygon`
 
+如果启动报错 `@turf/helpers` 未找到，那请下载 `npm i @turf/helpers`
+
+地区经纬度生成 参考  [DataV.GeoAtlas地理小工具系列](https://datav.aliyun.com/portal/school/atlas/area_selector) 可以选择范围选择器或者边界生成器生成经纬度数据
 
 ### vue 模板
 
