@@ -16,7 +16,7 @@
 				:style="{ backgroundColor: disable ? 'rgba(0, 0, 0, 0.2)' : '#42b983' }">确定</view>
 		</view>
 		<map id="map" class="map" :longitude="long" :latitude="lat" show-location @tap="onTap" :markers="markers"
-			:polygons="isPolygons?polygons:[]">
+			:polygons="isPolygons?polygons:[]" enable-poi @poitap="poitap">
 			<cover-view>
 				<slot name="content"></slot>
 			</cover-view>
@@ -1265,10 +1265,6 @@
 		methods: {
 			//初始化
 			initData() {
-				// this.qqmapsdk = new QQMapWX({
-				// 	key: this.key
-				// });
-
 				uni.getLocation({
 					type: 'gcj02',
 					isHighAccuracy: true,
@@ -1279,6 +1275,9 @@
 						this.goSearchNearby();
 					}
 				});
+			},
+			poitap(e) {
+				this.onTap(e)
 			},
 			onTap(e) {
 				this.lat = e.detail.latitude;

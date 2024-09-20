@@ -16,7 +16,7 @@
 				:style="{ backgroundColor: disable ? 'rgba(0, 0, 0, 0.2)' : '#42b983' }">确定</view>
 		</view>
 		<map class="map" id="map" :latitude="lat" :longitude="long" scale="18" show-location :markers="markers"
-			@tap="getCurrentLocation" :polygons="isPolygons?polygons:[]">
+			@tap="getCurrentLocation" :polygons="isPolygons?polygons:[]" enable-poi @poitap="poitap">
 			<cover-view>
 				<slot name="content"></slot>
 			</cover-view>
@@ -614,6 +614,9 @@
 						detail
 					});
 				}
+			},
+			poitap(e) {
+				this.getCurrentLocation(e)
 			},
 			//点击地图
 			getCurrentLocation(e) {
