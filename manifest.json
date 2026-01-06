@@ -1,5 +1,5 @@
 {
-	"name": "uniapp-plugins-vue2",
+	"name": "uniapp-plugins-vue3",
 	"appid": "__UNI__0B56075",
 	"description": "",
 	"versionName": "1.0.0",
@@ -74,5 +74,5 @@
 	"uniStatistics": {
 		"enable": false
 	},
-	"vueVersion": "2"
+	"vueVersion": "3"
 }
