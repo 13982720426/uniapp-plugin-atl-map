@@ -1,3 +1,11 @@
+## 2.0.0（2026-01-06）
+feat: 全面重构为 Vue 3 版本
+- 使用 `<script setup>` 和 Composition API 重构所有组件
+- 提取通用逻辑到 useMapCommon hook
+- 更新地图 SDK 导出方式为 ES Module
+- 优化代码结构，移除冗余代码
+- 完善 TypeScript 类型定义（部分）
+
 ## 1.4.7（2024-09-20）
 fix: 修复点击poi点位，导致tap事件失效问题
 ## 1.4.6（2024-09-01）
